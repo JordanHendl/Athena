@@ -24,6 +24,8 @@
 
 CMAKE_MINIMUM_REQUIRED( VERSION 3.8.0 )
 
+LIST( APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake" )
+
 PROJECT( KT CXX )
 
 # Set build config.
@@ -77,6 +79,24 @@ MESSAGE(  "├─GNU:               ${GNU}"               )
 MESSAGE(  "└─MSVC:              ${MSVC}"              )
 MESSAGE( " " ) 
 
+SET( BIN_DIR     "bin"     )
+SET( INCLUDE_DIR "include" )
+SET( LIB_DIR     "lib64"   )
+SET( DOC_DIR     "doc"     )
+SET( CONFIG_DIR  "KT"      )
+
+INCLUDE( KPackage ) 
+
+# Set output directories.
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${LIB_DIR} )
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${LIB_DIR} )
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${BIN_DIR} )
+set(DOCUMENTATION_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${DOC_DIR} )
+
 INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR}/src ) 
 
 ADD_SUBDIRECTORY( src )
+
+#EXPORT( TARGETS karma_test FILE ${LIB_DIR}/KTConfig.cmake )
+
+INSTALL( EXPORT kt FILE KTConfig.cmake NAMESPACE Karma:: DESTINATION ${CONFIG_INSTALL_DIR} )

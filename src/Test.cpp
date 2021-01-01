@@ -67,7 +67,6 @@ int main()
   manager.add( "success"     , &success                  ) ;
   manager.add( "failure"     , &failure                  ) ;
   
-  
   assert( manager.test( karma::test::Output::Verbose ) == 2 ) ;
   
   return 0 ;
