@@ -79,11 +79,11 @@ MESSAGE(  "├─GNU:               ${GNU}"               )
 MESSAGE(  "└─MSVC:              ${MSVC}"              )
 MESSAGE( " " ) 
 
-SET( BIN_DIR     "bin"     )
-SET( INCLUDE_DIR "include" )
-SET( LIB_DIR     "lib64"   )
-SET( DOC_DIR     "doc"     )
-SET( CONFIG_DIR  "KT"      )
+SET( BIN_DIR     "bin/${CMAKE_PROJECT_NAME}"     )
+SET( INCLUDE_DIR "include/${CMAKE_PROJECT_NAME}" )
+SET( LIB_DIR     "lib64/${CMAKE_PROJECT_NAME}"   )
+SET( DOC_DIR     "doc/${CMAKE_PROJECT_NAME}"     )
+SET( CONFIG_DIR  "${CMAKE_PROJECT_NAME}"         )
 
 INCLUDE( KPackage ) 
 
@@ -99,4 +99,4 @@ ADD_SUBDIRECTORY( src )
 
 #EXPORT( TARGETS karma_test FILE ${LIB_DIR}/KTConfig.cmake )
 
-INSTALL( EXPORT kt FILE KTConfig.cmake NAMESPACE Karma:: DESTINATION ${CONFIG_INSTALL_DIR} )
+INSTALL( EXPORT kt FILE KTConfig.cmake NAMESPACE Karma:: DESTINATION ${CONFIG_INSTALL_DIR}/${CONFIG_DIR} )
