@@ -48,7 +48,7 @@
   }
   ```
 
-##Example output:
+## Example output:
   ```
   | ✗ | failure -> Failed
       └─Time: 0.871μs
