@@ -1,4 +1,4 @@
-#(K)arma (T)est Library.
+# (K)arma (T)est Library.
   A C++ Library meant to make testing quick, easy, and also not annoying.
 
 ## Project Integration
