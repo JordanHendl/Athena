@@ -25,7 +25,7 @@
 CMAKE_MINIMUM_REQUIRED( VERSION 3.8.0 )
 
 LIST( APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake" )
-
+INCLUDE(GenerateExportHeader)
 PROJECT( KT CXX )
 
 # Set build config.
@@ -79,13 +79,20 @@ MESSAGE(  "├─GNU:               ${GNU}"               )
 MESSAGE(  "└─MSVC:              ${MSVC}"              )
 MESSAGE( " " ) 
 
-SET( BIN_DIR     "bin/${CMAKE_PROJECT_NAME}"     )
-SET( INCLUDE_DIR "include/${CMAKE_PROJECT_NAME}" )
-SET( LIB_DIR     "lib64/${CMAKE_PROJECT_NAME}"   )
-SET( DOC_DIR     "doc/${CMAKE_PROJECT_NAME}"     )
-SET( CONFIG_DIR  "${CMAKE_PROJECT_NAME}"         )
 
 INCLUDE( KPackage ) 
+
+SET( INSTALL_BIN_DIR     "bin"                          )
+SET( INSTALL_INCLUDE_DIR "include/${CMAKE_PROJECT_NAME}")
+SET( INSTALL_LIB_DIR     "lib64"                        )
+SET( INSTALL_DOC_DIR     "doc"                          )
+SET( INSTALL_CONFIG_DIR  "config"                       )
+
+SET( EXPORT_BIN_DIR     "${CPACK_PACKAGING_INSTALL_PREFIX}/bin"     )
+SET( EXPORT_INCLUDE_DIR "${CPACK_PACKAGING_INSTALL_PREFIX}/include" )
+SET( EXPORT_LIB_DIR     "${CPACK_PACKAGING_INSTALL_PREFIX}/lib64"   )
+SET( EXPORT_DOC_DIR     "${CPACK_PACKAGING_INSTALL_PREFIX}/doc"     )
+SET( EXPORT_CONFIG_DIR  "${CPACK_PACKAGING_INSTALL_PREFIX}/config"  )
 
 # Set output directories.
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${LIB_DIR} )
@@ -97,6 +104,4 @@ INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR}/src )
 
 ADD_SUBDIRECTORY( src )
 
-#EXPORT( TARGETS karma_test FILE ${LIB_DIR}/KTConfig.cmake )
-
-INSTALL( EXPORT kt FILE KTConfig.cmake NAMESPACE Karma:: DESTINATION ${CONFIG_INSTALL_DIR}/${CONFIG_DIR} )
+INSTALL( EXPORT kt FILE KTConfig.cmake DESTINATION ${INSTALL_CONFIG_DIR} COMPONENT dev )
