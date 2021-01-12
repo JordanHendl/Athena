@@ -78,11 +78,11 @@ namespace karma
       switch( result.value() )
       {
         case Result::Pass :
-          return "✔" ;
+          return " ✔ " ;
         case Result::Fail :
-          return "✗" ;
+          return " ✗ " ;
         case Result::Skip :
-          return "■" ;
+          return " ■ " ;
         default:
           return "???" ;
       };
@@ -195,8 +195,15 @@ namespace karma
 
         if( output.value() == Output::Verbose )
         {
-          std::cout << "\n"                                                     ;
-          std::cout << "    └─Time: " << std::setprecision( 5 ) << time << "μs" ;
+          std::cout << "\n" ;
+          if( time < 1000.0 )
+          {
+            std::cout << "    └─Time: " << std::setprecision( 5 ) << time << "μs" ;
+          }
+          else
+          {
+            std::cout << "    └─Time: " << std::setprecision( 5 ) << time / 1000.0 << "ms" ;
+          }
         }
       }
     }
@@ -212,6 +219,9 @@ namespace karma
       
       if( output.value() == output.Verbose )
       {
+        if( total_time >= 1000.0 )
+        std::cout << "\n    Total Elapsed Time : " << std::setprecision( 5 ) << total_time / 1000 << "ms" << std::endl ;
+        else
         std::cout << "\n    Total Elapsed Time : " << std::setprecision( 5 ) << total_time << "μs" << std::endl ;
       }
     }
@@ -274,7 +284,7 @@ namespace karma
 
     Result::operator bool() const
     {
-      return this->enumeration ;
+      return static_cast<bool>( this->enumeration == 1 ? true : false ) ;
     }
 
     unsigned Result::value() const
