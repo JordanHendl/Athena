@@ -24,21 +24,21 @@ class Object
     Object() = default ;
     ~Object() = default ;
     
-    karma::test::Result method1() ;
+    athena::Result method1() ;
     
-    karma::test::Result method2() ;
+    athena::Result method2() ;
     
     bool method3() ;
 };
 
-karma::test::Result Object::method1()
+athena::Result Object::method1()
 {
-  return karma::test::Result::Pass ;
+  return athena::Result::Pass ;
 }
 
-karma::test::Result Object::method2()
+athena::Result Object::method2()
 {
-  return karma::test::Result::Skip ;
+  return athena::Result::Skip ;
 }
 
 bool Object::method3()
@@ -58,8 +58,8 @@ bool failure()
 
 int main()
 {
-  karma::test::Manager manager ;
-  Object               object  ;
+  athena::Manager manager ;
+  Object          object  ;
   
   manager.add( "object_test1", &object, &Object::method1 ) ;
   manager.add( "object_test2", &object, &Object::method2 ) ;
@@ -67,7 +67,7 @@ int main()
   manager.add( "success"     , &success                  ) ;
   manager.add( "failure"     , &failure                  ) ;
   
-  assert( manager.test( karma::test::Output::Verbose ) == 2 ) ;
+  assert( manager.test( athena::Output::Verbose ) == 2 ) ;
   
   return 0 ;
 }

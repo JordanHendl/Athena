@@ -26,7 +26,9 @@ CMAKE_MINIMUM_REQUIRED( VERSION 3.8.0 )
 
 LIST( APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake" )
 INCLUDE(GenerateExportHeader)
-PROJECT( KT CXX )
+INCLUDE(CMakePackageConfigHelpers)
+
+PROJECT( Athena CXX )
 
 # Set build config.
 SET( ARCHITECTURE "64bit" CACHE STRING "The system architecture."              )
@@ -86,7 +88,6 @@ SET( BIN_DIR     bin     )
 SET( INCLUDE_DIR include )
 SET( LIB_DIR     lib64   )
 SET( DOC_DIR     doc     )
-SET( CONFIG_DIR  KT      )
 
 SET( HEADER_INSTALL_DIR ${INCLUDE_DIR}/${CMAKE_PROJECT_NAME} )
 
@@ -106,4 +107,4 @@ ENDIF()
 
 ADD_SUBDIRECTORY( src )
 
-INSTALL( EXPORT kt FILE KTConfig.cmake DESTINATION ${LIB_DIR} COMPONENT dev )
+INSTALL( EXPORT Athena FILE AthenaConfig.cmake DESTINATION ${CMAKE_PROJECT_NAME} COMPONENT dev )
