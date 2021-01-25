@@ -25,31 +25,65 @@
 CMAKE_MINIMUM_REQUIRED( VERSION 3.8.0 )
 
 LIST( APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake" )
-INCLUDE(GenerateExportHeader)
-INCLUDE(CMakePackageConfigHelpers)
+
+INCLUDE( Message )
+
+OPTION( BUILD_RELEASE "Whether or not the to build for release."  OFF )
+OPTION( BUILD_DOCS    "Whether or not the to build for release."  OFF )
 
 PROJECT( Athena CXX )
 
+# Print build options
+MESSAGE( STATUS "" ) 
+MESSAGE( INFO "Build Options:" ) 
+MESSAGE( INFO "├─BUILD DOCS    ${BUILD_DOCS}   " )
+MESSAGE( INFO "└─BUILD RELEASE ${BUILD_RELEASE}" )
+
+IF( BUILD_RELEASE  )
+    MESSAGE( INFO "Building for release" )
+    IF( MSVC )
+      ADD_COMPILE_OPTIONS( /W3 /02 )
+    ELSEIF( UNIX AND NOT APPLE )
+      ADD_COMPILE_OPTIONS( -Wall -Wextra -pedantic -Werror -fPIC -O3 -Wno-cast-function-type )
+    ENDIF()
+ELSE()
+    MESSAGE( INFO "Building for debug" )
+    IF( MSVC )
+      ADD_COMPILE_OPTIONS( /DEBUG )
+    ELSEIF( UNIX AND NOT APPLE )
+      ADD_COMPILE_OPTIONS( -Wall -Wextra -pedantic -Werror -fPIC -g -Wno-cast-function-type )
+    ENDIF()
+ENDIF()
+
 # Set build config.
-SET( ARCHITECTURE "64bit" CACHE STRING "The system architecture."              )
-SET( CXX_STANDARD "17"    CACHE STRING "The C++ standard to use for building." )
-SET( MAJOR        "0"     CACHE STRING "The major version of this build."      )
-SET( MINOR        "1"     CACHE STRING "The minor version of this build."      )
-SET( BRANCH       "0"     CACHE STRING "The branch version of this build."     )
-SET( REVISION     "0"     CACHE STRING "The revision of this build."           )
+SET( ARCHITECTURE "64bit" CACHE STRING "The system architecture."                     )
+SET( CXX_STANDARD "17"    CACHE STRING "The C++ standard to use for building."        )
+SET( MAJOR        "0"     CACHE STRING "The major version of this build."             )
+SET( MINOR        "1"     CACHE STRING "The minor version of this build."             )
+SET( BRANCH       "0"     CACHE STRING "The branch version of this build."            )
+SET( REVISION     "0"     CACHE STRING "The revision of this build."                  )
+SET( GENERATOR    "RPM"   CACHE STRING "The Package Generator to use for this build." )
+
+IF( WIN32 )
+  SET( INSTALL_LOCATION "C:/Program Files" CACHE STRING "The default NSIS install location of this library" )
+ELSEIF( UNIX AND NOT APPLE )
+  SET( INSTALL_LOCATION "/usr/local/lib64" CACHE STRING "The RPM install location of this library." ) 
+ENDIF()
 
 SET( PROJECT_VERSION "${MAJOR}.${MINOR}.${BRANCH}.${REVISION}" )
 
 # Print build configurations.
-MESSAGE( " " ) 
-MESSAGE( "Build Configuration:"                 )
-MESSAGE( "├─ARCHITECTURE:   ${ARCHITECTURE}"    )
-MESSAGE( "├─CXX_STANDARD:   ${CXX_STANDARD}"    )
-MESSAGE( "└─VERSION:        ${PROJECT_VERSION}" )
-MESSAGE( "  ├─MAJOR:        ${MAJOR}"           )
-MESSAGE( "  ├─MINOR:        ${MINOR}"           )
-MESSAGE( "  ├─BRANCH:       ${BRANCH}"          )
-MESSAGE( "  └─REVISION:     ${REVISION}"        )
+MESSAGE( INFO " " ) 
+MESSAGE( INFO "Build Configuration:"                      )
+MESSAGE( INFO "├─ARCHITECTURE      : ${ARCHITECTURE}"     )
+MESSAGE( INFO "├─INSTALL GENERATOR : ${GENERATOR}"        )
+MESSAGE( INFO "├─INSTALL LOCATION  : ${INSTALL_LOCATION}" )
+MESSAGE( INFO "├─CXX_STANDARD      : ${CXX_STANDARD}"     )
+MESSAGE( INFO "└─VERSION           : ${PROJECT_VERSION}"  )
+MESSAGE( INFO "  ├─MAJOR           : ${MAJOR}"            )
+MESSAGE( INFO "  ├─MINOR           : ${MINOR}"            )
+MESSAGE( INFO "  ├─BRANCH          : ${BRANCH}"           )
+MESSAGE( INFO "  └─REVISION        : ${REVISION}"         )
 
 STRING( TIMESTAMP DATE "%Y%m%d" )
 STRING( TIMESTAMP Time "%H%M%S" )
@@ -80,7 +114,6 @@ MESSAGE(  "├─INTEL:             ${INTEL}"             )
 MESSAGE(  "├─GNU:               ${GNU}"               )
 MESSAGE(  "└─MSVC:              ${MSVC}"              )
 MESSAGE( " " ) 
-
 
 INCLUDE( KPackage ) 
 
