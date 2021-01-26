@@ -14,6 +14,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+FIND_PACKAGE( Threads ) 
 SET( ATHENA_SOURCES 
   Manager.cpp
 )
@@ -27,7 +28,7 @@ TARGET_LINK_LIBRARIES     ( athena PUBLIC  ${ATHENA_LIBRARIES}                 )
 TARGET_INCLUDE_DIRECTORIES( athena PRIVATE ${ATHENA_INCLUDE_DIRS}              )
 
 ADD_EXECUTABLE       ( athena_test Test.cpp   )
-TARGET_LINK_LIBRARIES( athena_test athena     )
+TARGET_LINK_LIBRARIES( athena_test athena  ${CMAKE_THREAD_LIBS_INIT}   )
 
 INSTALL( FILES ${ATHENA_HEADERS} DESTINATION ${HEADER_INSTALL_DIR} )
 

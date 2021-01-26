@@ -170,6 +170,11 @@ namespace athena
        */
       ~Manager() ;
       
+      /** Method to initialize the manager.
+       * @param program_name The name of the program/product being tested.
+       */
+      void initialize( const char* program_name ) ;
+
       /** Method to add a test callback to this object.
        * @param name The name of the test to associate with the callback.
        * @param callback The function to assess as a test.

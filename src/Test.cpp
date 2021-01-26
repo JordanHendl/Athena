@@ -17,6 +17,7 @@
 
 #include "Manager.h"
 #include <assert.h>
+#include <thread>
 
 class Object
 {
@@ -33,26 +34,31 @@ class Object
 
 athena::Result Object::method1()
 {
+  std::this_thread::sleep_for( std::chrono::milliseconds( 5 ) ) ;
   return athena::Result::Pass ;
 }
 
 athena::Result Object::method2()
 {
+  std::this_thread::sleep_for( std::chrono::milliseconds( 2 ) ) ;
   return athena::Result::Skip ;
 }
 
 bool Object::method3()
 {
+  std::this_thread::sleep_for( std::chrono::milliseconds( 15 ) ) ;
   return false ;
 }
 
 bool success()
 {
+  std::this_thread::sleep_for( std::chrono::milliseconds( 10 ) ) ;
   return true ;
 }
 
 bool failure()
 {
+  std::this_thread::sleep_for( std::chrono::milliseconds( 5 ) ) ;
   return false ;
 }
 
@@ -61,6 +67,7 @@ int main()
   athena::Manager manager ;
   Object          object  ;
   
+  manager.initialize( "Athena Unit Tester" ) ;
   manager.add( "object_test1", &object, &Object::method1 ) ;
   manager.add( "object_test2", &object, &Object::method2 ) ;
   manager.add( "object_test3", &object, &Object::method3 ) ;
