@@ -410,10 +410,10 @@ namespace athena
 
   unsigned Manager::test( const Output& output )
   {
-    TimePoint begin       ;
-    TimePoint end         ;
-    double    time        ;
-    Result    result      ;
+    TimePoint begin  ;
+    TimePoint end    ;
+    double    time   ;
+    Result    result ;
     
     for( auto& cb : data().callbacks )
     {

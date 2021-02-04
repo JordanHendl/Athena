@@ -31,7 +31,7 @@ INCLUDE( Message )
 OPTION( BUILD_RELEASE "Whether or not the to build for release."  OFF )
 OPTION( BUILD_DOCS    "Whether or not the to build for release."  OFF )
 
-PROJECT( Athena CXX )
+PROJECT( athena CXX )
 
 # Print build options
 MESSAGE( STATUS "" ) 
@@ -140,4 +140,4 @@ ENDIF()
 
 ADD_SUBDIRECTORY( src )
 
-INSTALL( EXPORT Athena FILE AthenaConfig.cmake DESTINATION ${CMAKE_PROJECT_NAME} COMPONENT dev )
+INSTALL( EXPORT ${CMAKE_PROJECT_NAME} FILE ${CMAKE_PROJECT_NAME}Config.cmake DESTINATION ${CMAKE_PROJECT_NAME} COMPONENT dev )
